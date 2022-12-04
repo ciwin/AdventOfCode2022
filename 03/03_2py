@@ -1,0 +1,27 @@
+# open the file
+with open('input_03.txt') as f:
+    # read all lines from the file
+    lines = f.readlines()
+
+# Create a dictionary to store the character-integer pairs
+asciiASCII = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+char_int_dict = {}
+for i, char in enumerate(asciiASCII):
+  char_int_dict[char] = i + 1
+
+prioSum = 0
+
+for i in range(0, len(lines), 3):
+    line1 = lines[i].strip()
+    line2 = lines[i+1].strip()
+    line3 = lines[i+2].strip()
+    # print ("line = %s" %line)
+ 
+    for char in line1:
+        if ((char in line2) and (char in line3)):
+            break
+    # print ("Common char is %c with priority %d" % (char, char_int_dict[char]))
+
+    prioSum += char_int_dict[char]
+
+print ("The sum of all priorities is %d" % prioSum)
