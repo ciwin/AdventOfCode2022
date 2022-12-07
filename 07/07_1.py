@@ -9,7 +9,7 @@ with open('input_07.txt') as f:
 # print (lines[0])
 
 rootDir = None
-totalSizeSmaller = 0
+dirList = []
 
 class File:
     def __init__(self, name, size):
@@ -52,15 +52,19 @@ class Dir:
         return None
 
     def calcDirSize(self):
-        global totalSizeSmaller
+        global dirList
         size = 0
         for f in self.fileList:
             size += f.size
         for d in self.dirList:
             size += d.calcDirSize()
-        if size <= 100000:
-            print ("dir %s with size %d is smaller 100.000" %(self.name, size))
-            totalSizeSmaller += size
+        dir = {
+            'name' : self.name,
+            'size' : size
+        }
+        dirList.append(dir)
+        #print ("dir %s with size %d" %(self.name, size))
+        # totalSizeSmaller += size
         return size
         
 rootDir = Dir("/", None)
@@ -93,5 +97,22 @@ while index+1 < len(lines):
             print ("ERROR: File already exists!")
         # print ("  -- Added new file = %s" %command[1])
 
-rootDir.calcDirSize()
-print ("total size of files maller 100.000: %d" %totalSizeSmaller)
+rootSize    = rootDir.calcDirSize()
+freeSpace   = 70000000 - rootSize
+neededSpace = 30000000 - freeSpace
+
+print ("Needed Space: %d" %neededSpace)
+for d in dirList:
+    print(d)
+
+bestDir = None
+delete  = rootSize
+for d in dirList:
+    if d["size"] >= neededSpace and d["size"] <= delete:
+        delete  = d["size"]
+        bestDir = d
+
+print ("Dir to delete: %s (size: %d)" %(bestDir["name"], bestDir["size"]))
+# print ("Total free space after delete: %d" %(freeSpace + bestDir["size"]))
+
+# My solution is nbnzfc, but this seems to be wrong!
