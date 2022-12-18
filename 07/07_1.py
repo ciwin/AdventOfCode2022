@@ -1,7 +1,5 @@
 # open the file
 from ctypes import sizeof
-
-
 with open('input_07.txt') as f:
     # read all lines from the file
     lines = f.readlines()
