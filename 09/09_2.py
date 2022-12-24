@@ -1,10 +1,20 @@
 # open the file
-# from ctypes import sizeof
+with open('input_09.txt') as f:
+    # read all lines from the file
+    lines = f.readlines()
 
 # Global Variables:
 visitedPlaces = []
 head          = [0,0]
-tail          = [0,0]
+tail1         = [0,0]
+tail2         = [0,0]
+tail3         = [0,0]
+tail4         = [0,0]
+tail5         = [0,0]
+tail6         = [0,0]
+tail7         = [0,0]
+tail8         = [0,0]
+tail9         = [0,0]
 
 def savePlace(pos):
     global visitedPlaces
@@ -28,9 +38,7 @@ def moveHead(dir):
         print("ERROR: Wrong dir read!")
     return
 
-def moveTail():
-    global head
-    global tail
+def moveTail(head, tail):
     if head[0] == tail[0] and head[1] == tail[1]:
         return
     if ((head[0] == tail[0] and head[1] == tail[1]+1) or  #  T and H are adjacent
@@ -64,11 +72,7 @@ def moveTail():
         tail[1] += 1
     return
 
-with open('input_09.txt') as f:
-    # read all lines from the file
-    lines = f.readlines()
-
-savePlace(tail)
+savePlace(tail1)
 
 for line in lines:
     line = line.strip()
@@ -78,10 +82,18 @@ for line in lines:
     # print ("Dir: %s Steps: %d" %(dir, steps))
     for i in range(steps):
         moveHead(dir)
-        moveTail()
+        moveTail(head, tail1)
+        moveTail(tail1, tail2)
+        moveTail(tail2, tail3)
+        moveTail(tail3, tail4)
+        moveTail(tail4, tail5)
+        moveTail(tail5, tail6)
+        moveTail(tail6, tail7)
+        moveTail(tail7, tail8)
+        moveTail(tail8, tail9)
         # print ("Head: %d %d - Tail: %d %d" %(head[0], head[1], tail[0], tail[1]))
-        savePlace(tail)
+        savePlace(tail9)
 
 # print ("Head is at %d %d" %(head[0], head[1]))
 # print (visitedPlaces)
-print ("Tail has visited %d different places" %len(visitedPlaces))
+print ("Tail9 has visited %d different places" %len(visitedPlaces))
